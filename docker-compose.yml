@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  # Application
+  app:
+    build:
+      context: .
+      dockerfile: app.dockerfile
+    working_dir: /var/www
+    environment:
+      - DB_ADAPTER=mysql2
+      - DB_HOST=172.17.0.1
+      - DB_PORT=3306
+      - DB_USER="rmtuser"
+      - DB_PASS=password
+      - DB_NAME=dodzweitacherobooks
+    volumes:
+      - ./:/var/www
+  # Web Server
+  web:
+    build:
+      context: .
+      dockerfile: web.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - "app"
+    ports:
+      - 8001:80
