@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -15,11 +16,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'fetch'])->name('dashboard');
+    
     Route::get('/orders', [OrderController::class, 'fetch'])->name('orders');
     Route::get('/orders/{order}', [OrderController::class, 'orderDetails'])->name('order.details');
     Route::post('/orders/status', [OrderController::class, 'upateOrderStatus'])->name('order.status');
