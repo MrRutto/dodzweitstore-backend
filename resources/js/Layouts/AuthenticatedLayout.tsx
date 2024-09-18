@@ -12,7 +12,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
@@ -24,6 +24,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
+                                </NavLink>
+                                <NavLink href={route('orders')} active={route().current('orders')}>
+                                    Orders
+                                </NavLink>
+                                <NavLink href={route('books')} active={route().current('books')}>
+                                    Books
                                 </NavLink>
                             </div>
                         </div>
@@ -96,6 +102,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('orders')} active={route().current('orders')}>
+                            Orders
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('books')} active={route().current('books')}>
+                            Books
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
@@ -118,7 +130,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
             {header && (
                 <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                    <div className="mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}
 

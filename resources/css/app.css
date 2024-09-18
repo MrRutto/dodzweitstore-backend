@@ -21,3 +21,16 @@
     transform: rotate(360deg);
   }
 } 
+
+.timeline {
+  border-left: 2px solid #d3d3d3;
+  padding-left: 1rem;
+}
+
+.timeline-icon {
+  left: -22px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #ff7603;
+}

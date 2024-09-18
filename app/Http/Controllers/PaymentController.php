@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\Mpesa;
 use App\Models\ApiResult;
 use App\Models\Order;
+use App\Models\OrderHistory;
 use App\Models\StkPushTransactionDetail;
 use Exception;
 use Illuminate\Http\Request;
@@ -93,8 +94,16 @@ class PaymentController extends Controller
 
         $order = Order::find($detail->order_id);
         $order->status = "processing";
+        $order->is_paid = true;
+        $order->payment_type = "MPESA";
         $order->mpesa_reference = $body['CallbackMetadata']['Item'][1]['Value'];
         $order->save();
+
+        $history = new OrderHistory();
+        $history->order_id = $order->id;
+        $history->action_by = 'Customer';
+        $history->action = 'Customer paid for order via MPESA. Ref '. $body['CallbackMetadata']['Item'][1]['Value'];
+        $history->save();
 
         return 'OK';
     }
