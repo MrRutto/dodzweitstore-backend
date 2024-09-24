@@ -99,6 +99,8 @@ class OrderController extends Controller
             $order->phone_number = $request->phoneNumber;
             $order->email_address = $request->emailAddress;
             $order->price = $price;
+            $order->delivery_type = $request->deliveryType;
+
             $order->save();
 
             if ($request->deliveryType != 'pickup') {
@@ -155,7 +157,17 @@ class OrderController extends Controller
 
         if ($order->status != 'placed') return response()->json([ 'message' => 'success', 'status' => 'invalid']);
 
-        return response()->json([ 'message' => 'success', 'status' => 'processing', 'order' => $order->price ]);
+        return response()->json([ 'message' => 'success', 'status' => 'processing', 'order' => ($order->price + $this->ValidateDeliveryPrice($order->delivery_type)) ]);
+    }
+
+    private function ValidateDeliveryPrice($location) 
+    {
+        switch($location)
+        {
+            case 'pickup': return 0;
+            case 'nairobi': return 500;
+            default: return 1000;
+        }
     }
 
     public function upateOrderStatus(Request $request)
